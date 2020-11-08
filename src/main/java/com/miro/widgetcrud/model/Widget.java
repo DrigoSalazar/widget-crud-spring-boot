@@ -2,18 +2,14 @@ package com.miro.widgetcrud.model;
 
 import java.util.Date;
 
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 
 @Setter
 @Getter
 @AllArgsConstructor
-public class Widget {
-	
-	private long id;
+public class Widget extends BaseEntity{
 	
 	private int positionX;
 	
