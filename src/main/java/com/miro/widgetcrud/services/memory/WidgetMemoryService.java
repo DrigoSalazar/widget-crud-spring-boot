@@ -1,5 +1,6 @@
 package com.miro.widgetcrud.services.memory;
 
+import java.util.Date;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ public class WidgetMemoryService extends AbstractMemoryService<Widget, Long> imp
 	
 	@Override
 	public Widget save(Widget object) {
+		object.setModified(new Date());
 		return super.save(object);
 	}
 	
