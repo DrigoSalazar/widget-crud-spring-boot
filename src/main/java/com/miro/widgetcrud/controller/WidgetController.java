@@ -2,6 +2,8 @@ package com.miro.widgetcrud.controller;
 
 import java.util.Set;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,9 +28,8 @@ public class WidgetController {
 	}
 	
 	@PostMapping
-	public Widget save(@RequestBody Widget widget) {
-		return widgetService.save(widget);
-		
+	public Widget save(@RequestBody @Valid Widget widget) {
+		return widgetService.save(widget);		
 	}
 	
 	

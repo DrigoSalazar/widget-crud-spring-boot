@@ -2,6 +2,9 @@ package com.miro.widgetcrud.model;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,15 +14,22 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Widget extends BaseEntity{
 	
-	private int positionX;
+	@NotNull
+	private Integer positionX;
 	
-	private int positionY;
+	@NotNull
+	private Integer positionY;
 	
-	private int zIndex;
+	@NotNull
+	private Integer zIndex;
 	
-	private int width;
+	@NotNull
+	@Positive
+	private Integer width;
 	
-	private int height;
+	@NotNull
+	@Positive
+	private Integer height;
 	
 	private Date modified;
 	
