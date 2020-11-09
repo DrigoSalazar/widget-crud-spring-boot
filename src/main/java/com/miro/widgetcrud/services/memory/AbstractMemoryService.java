@@ -26,7 +26,6 @@ public class AbstractMemoryService<T extends BaseEntity, ID extends Long> {
             if(object.getId() == null){
                 object.setId(getNextId());
             }
-            System.out.println("Saving widget:" + object);
             map.put(object.getId(), object);
         } else {
             throw new RuntimeException("Object cannot be null");
