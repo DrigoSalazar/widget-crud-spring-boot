@@ -175,5 +175,13 @@ class WidgetMemoryServiceTest {
         assertEquals(zIndex+1, existingWidget.getZIndex());
         
     }
+    
+    @Test
+    void findByZIndex() throws JsonProcessingException {
+        Integer zIndex = 3;
+        
+        Widget foundWidget = widgetService.findByZIndex(zIndex);
+        assertNotNull(foundWidget);        
+    }
 
 }
