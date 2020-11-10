@@ -13,7 +13,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
+@ToString
 @Setter
 @Getter
 @AllArgsConstructor
@@ -22,11 +24,19 @@ import lombok.Setter;
 public class Widget extends BaseEntity{
 	
 	@Builder
-	public Widget(Long id, @NotNull Integer positionX, @NotNull Integer positionY, @NotNull Integer zIndex,
+	public Widget(Long id, @NotNull Integer x, @NotNull Integer y, @NotNull Integer zIndex,
 			@NotNull @Positive Integer width, @NotNull @Positive Integer height, Date modified) {
 		super(id);
-		this.positionX = positionX;
-		this.positionY = positionY;
+		this.coordinates = new CartesianCoordinates(x, y);
+		this.zIndex = zIndex;
+		this.width = width;
+		this.height = height;
+		this.modified = modified;
+	}
+	
+	public Widget(@NotNull Integer x, @NotNull Integer y, @NotNull Integer zIndex,
+			@NotNull @Positive Integer width, @NotNull @Positive Integer height, Date modified) {
+		this.coordinates = new CartesianCoordinates(x, y);
 		this.zIndex = zIndex;
 		this.width = width;
 		this.height = height;
@@ -34,10 +44,7 @@ public class Widget extends BaseEntity{
 	}
 
 	@NotNull
-	private Integer positionX;
-	
-	@NotNull
-	private Integer positionY;
+	private CartesianCoordinates coordinates;
 	
 	@NotNull
 	private Integer zIndex;
@@ -51,5 +58,7 @@ public class Widget extends BaseEntity{
 	private Integer height;
 	
 	private Date modified;
+	
+
 	
 }

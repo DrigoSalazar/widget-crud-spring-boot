@@ -24,8 +24,8 @@ class WidgetMemoryServiceTest {
 		widgetService = new WidgetMemoryService();
 		widgetService.save(Widget.builder()
         			.id(widgetId)
-        			.positionX(4)
-        			.positionY(5)
+        			.x(4)
+        			.y(5)
         			.width(100)
         			.height(200)
         			.zIndex(2)
@@ -66,23 +66,18 @@ class WidgetMemoryServiceTest {
     }
 
     @Test
-    void saveExistingId() {
-
-        Long id = 2L;
-
-        Widget widget2 = Widget.builder().id(id).build();
-
-        Widget savedWidget = widgetService.save(widget2);
-
-        assertEquals(id, savedWidget.getId());
-    }
-
-    @Test
-    void saveDuplicateId() {
+    void updateWidget() {
 
         Long id = 1L;
 
-        Widget widget2 = Widget.builder().id(id).build();
+        Widget widget2 = Widget.builder()
+        		.id(widgetId)
+    			.x(5)
+    			.y(5)
+    			.width(500)
+    			.height(500)
+    			.zIndex(2)
+    			.build();
 
         Widget savedWidget = widgetService.save(widget2);
 
