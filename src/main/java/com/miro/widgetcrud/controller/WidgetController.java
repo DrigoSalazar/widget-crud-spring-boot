@@ -4,7 +4,6 @@ import java.util.Set;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,14 +11,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.miro.widgetcrud.model.Widget;
-import com.miro.widgetcrud.services.CrudService;
+import com.miro.widgetcrud.services.WidgetService;
+
+import lombok.RequiredArgsConstructor;
 
 @RequestMapping("widget")
 @RestController
+@RequiredArgsConstructor
 public class WidgetController {
 
-	@Autowired
-	private CrudService<Widget, Long> widgetService; 
+	private final WidgetService widgetService; 
 	
 	@GetMapping("/all")
 	public Set<Widget> findAll() {
