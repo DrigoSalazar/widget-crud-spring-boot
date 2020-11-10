@@ -18,10 +18,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.miro.widgetcrud.model.Widget;
 import com.miro.widgetcrud.services.WidgetService;
 
@@ -38,14 +36,11 @@ class WidgetControllerTest {
 	
 	MockMvc mockMvc;
 	
-	private ObjectMapper objectMapper;
-	
 	Set<Widget> widgets;
 	
 	@BeforeEach
     void setUp() {
-		objectMapper = new ObjectMapper();
-        mockMvc = MockMvcBuilders
+	    mockMvc = MockMvcBuilders
                 .standaloneSetup(widgetController)
                 .build();
         widgets = new HashSet<>();
@@ -81,22 +76,20 @@ class WidgetControllerTest {
 	
 	@Test
 	void saveTest() throws Exception {
-		Widget widget = new Widget(1,1,1,1,1,null);
-		
+		String widgetString = "{ \"coordinates\":{  \"x\": 1,  \"y\": 1 }, \"zindex\": 2, \"width\": 1, \"height\": 1}";
 		mockMvc.perform(post("/widget")
 				.contentType("application/json")
-				.content(objectMapper.writeValueAsString(widget)))
+				.content(widgetString))
 				.andExpect(status().isOk());
+		verify(widgetService).save(any());
 	}
 	
 	@Test
 	void updateTest() throws Exception {
-		Widget widget = new Widget(5,5,5,5,5,null);
-
-		
+		String widgetString = "{ \"coordinates\":{  \"x\": 1,  \"y\": 1 }, \"zindex\": 5, \"width\": 1, \"height\": 1}";
 		mockMvc.perform(put("/widget/1")
 				.contentType("application/json")
-				.content(objectMapper.writeValueAsString(widget)))
+				.content(widgetString))
 				.andExpect(status().isOk());
 				
 		verify(widgetService).save(any());
