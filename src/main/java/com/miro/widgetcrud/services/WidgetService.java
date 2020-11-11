@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import com.miro.widgetcrud.model.Widget;
 
 @Service
-public interface WidgetService extends CrudService<Widget, Long>{
+public interface WidgetService extends CrudService<Widget, Long> {
+	
+	public List<Widget> findAllSorted(Integer pageNo, Integer pageSize);
 	
 	public List<Widget> findAllSorted();
 }

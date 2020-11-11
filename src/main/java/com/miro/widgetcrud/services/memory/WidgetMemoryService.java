@@ -76,4 +76,10 @@ public class WidgetMemoryService extends AbstractMemoryService<Widget, Long> imp
     	}
     	widget.setZindex(widget.getZindex() + 1);
     }
+
+	@Override
+	public List<Widget> findAllSorted(Integer pageNo, Integer pageSize) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
