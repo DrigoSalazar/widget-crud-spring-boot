@@ -19,6 +19,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import com.miro.widgetcrud.model.Widget;
 import com.miro.widgetcrud.repositories.WidgetRepository;
@@ -51,13 +54,14 @@ class WidgetSDJpaServiceTest {
 
 	@Test
     void findAll() {
-        Set<Widget> returnWidgetsSet = new HashSet<>();
-        returnWidgetsSet.add(Widget.builder().id(1l).build());
-        returnWidgetsSet.add(Widget.builder().id(2l).build());
+		List<Widget> returnWidgetsList = new ArrayList<>();
+		returnWidgetsList.add(Widget.builder().id(1l).build());
+		returnWidgetsList.add(Widget.builder().id(2l).build());
+		Page<Widget> returnWidgetsPage = new PageImpl<>(returnWidgetsList);
+		        
+        when(widgetRepository.findAll((Pageable)any())).thenReturn(returnWidgetsPage);
 
-        when(widgetRepository.findAll()).thenReturn(returnWidgetsSet);
-
-        Set<Widget> widgets = service.findAll();
+        List<Widget> widgets = service.findAllSorted(1, 10);
 
         assertNotNull(widgets);
         assertEquals(2, widgets.size());

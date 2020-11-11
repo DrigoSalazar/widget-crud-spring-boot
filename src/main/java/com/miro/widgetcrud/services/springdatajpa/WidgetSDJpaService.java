@@ -2,6 +2,7 @@ package com.miro.widgetcrud.services.springdatajpa;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -17,7 +18,6 @@ import com.miro.widgetcrud.repositories.WidgetRepository;
 import com.miro.widgetcrud.services.WidgetService;
 
 
-
 @Service
 @Profile("springdatajpa")
 public class WidgetSDJpaService implements WidgetService {
@@ -30,7 +30,9 @@ public class WidgetSDJpaService implements WidgetService {
 	
 	@Override
 	public Set<Widget> findAll(){
-		return this.findAll();
+		Set<Widget> widgets = new HashSet<>();
+        widgetRepository.findAll().forEach(widgets::add);
+        return widgets;
 	}
 	
 	public List<Widget> findAllSorted(Integer pageNo, Integer pageSize) {
