@@ -4,12 +4,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import java.util.List;
 import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.miro.widgetcrud.model.CartesianCoordinates;
 import com.miro.widgetcrud.model.Widget;
 
 
@@ -245,6 +247,35 @@ class WidgetMemoryServiceTest {
     			.zIndex(integer)
     			.build());
 		}
+    }
+    
+    @Test
+    void findByAreaTest() {
+    	widgetService.save(Widget.builder()
+    			.id(1L)
+    			.width(100)
+    			.height(100)
+    			.x(50)
+    			.y(50)
+    			.build());
+    	widgetService.save(Widget.builder()
+    			.id(2L)
+    			.width(100)
+    			.height(100)
+    			.x(50)
+    			.y(100)
+    			.build());
+    	widgetService.save(Widget.builder()
+    			.id(3L)
+    			.width(100)
+    			.height(100)
+    			.x(100)
+    			.y(100)
+    			.build());
+    	CartesianCoordinates firstPoint = new CartesianCoordinates(0, 0);
+    	CartesianCoordinates secondPoint = new CartesianCoordinates(100, 150);
+    	List<Widget> listResult = widgetService.findAllSorted(0, 10, firstPoint, secondPoint);
+    	assertEquals(2, listResult.size());
     }
 
 }
