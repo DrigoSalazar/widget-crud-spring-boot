@@ -2,6 +2,7 @@ package com.miro.widgetcrud.controller;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
@@ -10,6 +11,7 @@ import javax.validation.constraints.Max;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -61,7 +63,7 @@ public class WidgetController {
 	}
 	
 	@PostMapping
-	public Widget save(@RequestBody @Valid() Widget widget) {
+	public Widget save(@RequestBody @Valid Widget widget) {
 		return widgetService.save(widget);		
 	}
 	
@@ -81,6 +83,20 @@ public class WidgetController {
 	@DeleteMapping("/{widgetId}")
 	public void deleteById(@PathVariable @Valid Long widgetId) {
 		widgetService.deleteById(widgetId);
+	}
+	
+	@ExceptionHandler
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Object> handle(MethodArgumentNotValidException ex) {
+		String errorMsg = String.join(",", ex.getBindingResult().
+				getAllErrors()
+				.stream()
+				.map(obj->obj.getDefaultMessage())
+				.collect(Collectors.toList()));
+		ErrorDetails errorDetails = new ErrorDetails(new Date(), errorMsg,
+				ex.getMessage().toString());
+				return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
 	}
 	
 	@ExceptionHandler

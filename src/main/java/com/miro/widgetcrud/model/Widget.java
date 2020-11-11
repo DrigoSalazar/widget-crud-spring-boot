@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
@@ -31,7 +32,7 @@ import lombok.ToString;
 @Table(name = "widget")
 public class Widget extends BaseEntity{
 	
-	@NotNull
+	@NotNull(message = "Coordinates X and Y are required. coordinates:{x: int, y: int }")
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "coordinates_id", referencedColumnName = "id")
 	private CartesianCoordinates coordinates;
@@ -39,13 +40,13 @@ public class Widget extends BaseEntity{
 	@Column(name = "zindex")
 	private Integer zindex;
 	
-	@NotNull
-	@Positive
+	@NotNull(message = "width is required")
+	@Positive(message = "width must be a positive integer")
 	@Column(name = "width")
 	private Integer width;
 	
-	@NotNull
-	@Positive
+	@NotNull(message = "height is required")
+	@Positive(message = "height must be a positive integer")
 	@Column(name = "height")
 	private Integer height;
 	
