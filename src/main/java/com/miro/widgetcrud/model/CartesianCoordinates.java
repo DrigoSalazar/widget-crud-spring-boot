@@ -5,6 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +16,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name="coordinates")
+@JsonInclude(Include.NON_NULL)
 public class CartesianCoordinates extends BaseEntity{
 	
 	

@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.miro.widgetcrud.model.CartesianCoordinates;
 import com.miro.widgetcrud.model.Widget;
 import com.miro.widgetcrud.services.WidgetService;
 
@@ -41,7 +42,20 @@ public class WidgetController {
 	@GetMapping("/all")
 	public List<Widget> findAll(
 			@RequestParam(defaultValue = "0") Integer pageNo, 
-            @RequestParam(defaultValue = "10") @Max(value=500, message="Max 500") Integer pageSize) {
+            @RequestParam(defaultValue = "10") @Max(value=500, message="Max 500") Integer pageSize,
+            @RequestParam(required = false) Integer fpX, 
+            @RequestParam(required = false) Integer fpY, 
+            @RequestParam(required = false) Integer spX, 
+            @RequestParam(required = false) Integer spY) {
+		if(fpX != null 
+				&& fpY != null 
+				&& spX != null 
+				&& spY != null) {
+			return widgetService.findAllSorted(pageNo, 
+					pageSize, 
+					new CartesianCoordinates(fpX, fpY),
+					new CartesianCoordinates(spX, spY));
+		}
 		return widgetService.findAllSorted(pageNo, pageSize);
 		
 	}

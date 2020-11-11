@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
@@ -13,9 +14,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.miro.widgetcrud.model.CartesianCoordinates;
 import com.miro.widgetcrud.model.Widget;
 import com.miro.widgetcrud.repositories.WidgetRepository;
 import com.miro.widgetcrud.services.WidgetService;
+import com.miro.widgetcrud.util.WidgetUtil;
 
 
 @Service
@@ -96,4 +99,16 @@ public class WidgetSDJpaService implements WidgetService {
 		Widget topZindexWidget = widgetRepository.findTopByOrderByZindexDesc();
     	return topZindexWidget != null ? topZindexWidget.getZindex() : 0;
     }
+
+	@Override
+	public List<Widget> findAllSorted(Integer pageNo, Integer pageSize, CartesianCoordinates firstPoint,
+			CartesianCoordinates secondPoint) {
+		return widgetRepository
+				.findAllByOrderByZindex()
+				.stream()
+				.filter(obj->WidgetUtil.isInArea(obj, firstPoint, secondPoint))
+				.skip(pageNo * pageSize)
+				.limit(pageSize)
+				.collect(Collectors.toList());
+	}
 }

@@ -11,8 +11,10 @@ import java.util.stream.Stream;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
+import com.miro.widgetcrud.model.CartesianCoordinates;
 import com.miro.widgetcrud.model.Widget;
 import com.miro.widgetcrud.services.WidgetService;
+import com.miro.widgetcrud.util.WidgetUtil;
 
 @Service
 @Profile({"default","memory"})
@@ -79,7 +81,22 @@ public class WidgetMemoryService extends AbstractMemoryService<Widget, Long> imp
 
 	@Override
 	public List<Widget> findAllSorted(Integer pageNo, Integer pageSize) {
-		// TODO Auto-generated method stub
-		return null;
+		return super.findAll()
+				.stream()
+				.sorted(Comparator.comparing(Widget::getZindex))
+				.skip(pageNo * pageSize)
+				.limit(pageSize)
+				.collect(Collectors.toList());
 	}
+	
+	public List<Widget> findAllSorted(Integer pageNo, Integer pageSize, CartesianCoordinates firstPoint, CartesianCoordinates secondPoint) {
+		return super.findAll()
+				.stream()
+				.filter(obj -> WidgetUtil.isInArea(obj, firstPoint, secondPoint))
+				.sorted(Comparator.comparing(Widget::getZindex))
+				.skip(pageNo * pageSize)
+				.limit(pageSize)
+				.collect(Collectors.toList());
+	}
+	
 }
