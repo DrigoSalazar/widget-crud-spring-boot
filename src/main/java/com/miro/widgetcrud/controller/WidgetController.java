@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.validation.Valid;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,6 +48,11 @@ public class WidgetController {
 	public Widget updateById(@PathVariable @Valid Long widgetId, @RequestBody @Valid Widget widget) {
 		widget.setId(widgetId);
 		return widgetService.save(widget);
+	}
+	
+	@DeleteMapping("/{widgetId}")
+	public void deleteById(@PathVariable @Valid Long widgetId) {
+		widgetService.deleteById(widgetId);
 	}
 	
 }
