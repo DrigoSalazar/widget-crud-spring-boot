@@ -25,8 +25,13 @@ public class WidgetSDJpaService implements WidgetService {
 	@Override
 	public Set<Widget> findAll() {
 		Set<Widget> widgets = new HashSet<>();
-		widgetRepository.findAll().forEach(widgets::add);
+		widgetRepository.findAll().forEach(widgets::add);;
 		return widgets;
+	}
+
+	public List<Widget> findAllSorted() {
+		List<Widget> widgetList = widgetRepository.findAllByOrderByZindex();
+		return widgetList;
 	}
 
 	@Override
@@ -37,10 +42,10 @@ public class WidgetSDJpaService implements WidgetService {
 	@Override
 	public Widget save(Widget object) {
 		object.setModified(new Date());
-		if(object.getZIndex() == null) {
-			object.setZIndex(this.getMaxZIndex() + 1);
+		if(object.getZindex() == null) {
+			object.setZindex(this.getMaxZindex() + 1);
 		}
-		Widget existingWidget = findByZIndex(object.getZIndex());
+		Widget existingWidget = findByZindex(object.getZindex());
     	if(existingWidget != null) {
     		moveWidget(existingWidget);
     	}
@@ -59,21 +64,21 @@ public class WidgetSDJpaService implements WidgetService {
 
 	}
 	
-	public Widget findByZIndex(Integer zIndex) {
-		List<Widget> widgets = widgetRepository.findByZIndex(zIndex);
+	public Widget findByZindex(Integer zIndex) {
+		List<Widget> widgets = widgetRepository.findByZindex(zIndex);
 		return widgets.size()>0 ? widgets.get(0) : null;
 	}
 
 	private void moveWidget(Widget widget) {
-    	Widget existingWidget = findByZIndex(widget.getZIndex() + 1);
+    	Widget existingWidget = findByZindex(widget.getZindex() + 1);
     	if(existingWidget != null) {
     		moveWidget(existingWidget);
     	}
-    	widget.setZIndex(widget.getZIndex() + 1);
+    	widget.setZindex(widget.getZindex() + 1);
     }
 	
-	private int getMaxZIndex() {
-		Widget topZIndexWidget = widgetRepository.findTopByOrderByZIndexDesc();
-    	return topZIndexWidget != null ? topZIndexWidget.getZIndex() : 0;
+	private int getMaxZindex() {
+		Widget topZindexWidget = widgetRepository.findTopByOrderByZindexDesc();
+    	return topZindexWidget != null ? topZindexWidget.getZindex() : 0;
     }
 }

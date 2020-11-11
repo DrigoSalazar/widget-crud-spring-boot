@@ -1,5 +1,6 @@
 package com.miro.widgetcrud.controller;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.Valid;
@@ -25,8 +26,8 @@ public class WidgetController {
 	private final WidgetService widgetService; 
 	
 	@GetMapping("/all")
-	public Set<Widget> findAll() {
-		return widgetService.findAll();
+	public List<Widget> findAll() {
+		return widgetService.findAllSorted();
 		
 	}
 	

@@ -8,7 +8,9 @@ import com.miro.widgetcrud.model.Widget;
 
 public interface WidgetRepository  extends CrudRepository<Widget, Long>{
 
-	public List<Widget> findByZIndex(Integer zIndex);
+	List<Widget> findByZindex(Integer zindex);
 	
-	Widget findTopByOrderByZIndexDesc();
+	Widget findTopByOrderByZindexDesc();
+	
+	List<Widget> findAllByOrderByZindex();
 }

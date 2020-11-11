@@ -1,8 +1,11 @@
 package com.miro.widgetcrud.services.memory;
 
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.springframework.context.annotation.Profile;
@@ -16,17 +19,21 @@ import com.miro.widgetcrud.services.WidgetService;
 public class WidgetMemoryService extends AbstractMemoryService<Widget, Long> implements WidgetService{
 	
 	@Override
-    public Set<Widget> findAll() {
+	public Set<Widget> findAll() {
         return super.findAll();
+    }
+	
+	public List<Widget> findAllSorted() {
+        return super.findAll().stream().sorted(Comparator.comparing(Widget::getZindex)).collect(Collectors.toList());
     }
 	
 	@Override
 	public Widget save(Widget object) {
 		object.setModified(new Date());
-		if(object.getZIndex() == null) {
-			object.setZIndex(this.getMaxZIndex() + 1);
+		if(object.getZindex() == null) {
+			object.setZindex(this.getMaxZindex() + 1);
 		}
-		Widget existingWidget = findByZIndex(object.getZIndex());
+		Widget existingWidget = findByZindex(object.getZindex());
     	if(existingWidget != null) {
     		moveWidget(existingWidget);
     	}
@@ -48,25 +55,25 @@ public class WidgetMemoryService extends AbstractMemoryService<Widget, Long> imp
         super.deleteById(id);
     }
     
-    public Widget findByZIndex(Integer zIndex) {
+    public Widget findByZindex(Integer zIndex) {
     	Stream<Widget> stream = map
     		.entrySet()
     		.stream()
-    		.filter(obj -> zIndex.equals(obj.getValue().getZIndex()))
+    		.filter(obj -> zIndex.equals(obj.getValue().getZindex()))
     		.map(Map.Entry::getValue);
     	return stream.findFirst().orElse(null);
     }
     
-    private int getMaxZIndex() {
-    	Integer max = map.values().stream().mapToInt(obj -> obj.getZIndex()).max().orElse(0);
+    private int getMaxZindex() {
+    	Integer max = map.values().stream().mapToInt(obj -> obj.getZindex()).max().orElse(0);
     	return max;
     }
     
     private void moveWidget(Widget widget) {
-    	Widget existingWidget = findByZIndex(widget.getZIndex() + 1);
+    	Widget existingWidget = findByZindex(widget.getZindex() + 1);
     	if(existingWidget != null) {
     		moveWidget(existingWidget);
     	}
-    	widget.setZIndex(widget.getZIndex() + 1);
+    	widget.setZindex(widget.getZindex() + 1);
     }
 }

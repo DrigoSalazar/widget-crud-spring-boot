@@ -17,7 +17,7 @@ assuming that all clients work with the same board.
   * All changes to widgets must occur atomically.
   
 * Deleting a widget. 
-  *We can delete the widget by its identifier.
+  * We can delete the widget by its identifier.
 
 * Getting a widget by Id. 
   * In response, we get a complete description of the widget.

@@ -37,8 +37,8 @@ public class Widget extends BaseEntity{
 	private CartesianCoordinates coordinates;
 	
 	@NotNull
-	@Column(name = "zIndex")
-	private Integer zIndex;
+	@Column(name = "zindex")
+	private Integer zindex;
 	
 	@NotNull
 	@Positive
@@ -58,7 +58,7 @@ public class Widget extends BaseEntity{
 			@NotNull @Positive Integer width, @NotNull @Positive Integer height, Date modified) {
 		super(id);
 		this.coordinates = new CartesianCoordinates(x, y);
-		this.zIndex = zIndex;
+		this.zindex = zIndex;
 		this.width = width;
 		this.height = height;
 		this.modified = modified;
@@ -67,7 +67,7 @@ public class Widget extends BaseEntity{
 	public Widget(@NotNull Integer x, @NotNull Integer y, @NotNull Integer zIndex,
 			@NotNull @Positive Integer width, @NotNull @Positive Integer height, Date modified) {
 		this.coordinates = new CartesianCoordinates(x, y);
-		this.zIndex = zIndex;
+		this.zindex = zIndex;
 		this.width = width;
 		this.height = height;
 		this.modified = modified;

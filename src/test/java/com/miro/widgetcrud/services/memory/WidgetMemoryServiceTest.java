@@ -157,25 +157,25 @@ class WidgetMemoryServiceTest {
     }
     
     @Test
-    void saveDuplicateZIndex() throws JsonProcessingException {
+    void saveDuplicateZindex() throws JsonProcessingException {
 
         Long id = 2L;
         Integer zIndex = 2;
         
         Widget widget2 = Widget.builder().id(id).zIndex(zIndex).build();
         Widget savedWidget = widgetService.save(widget2);
-        assertEquals(zIndex, savedWidget.getZIndex());
+        assertEquals(zIndex, savedWidget.getZindex());
         
         Widget existingWidget = widgetService.findById(widgetId);
-        assertEquals(zIndex+1, existingWidget.getZIndex());
+        assertEquals(zIndex+1, existingWidget.getZindex());
         
     }
     
     @Test
-    void findByZIndex() throws JsonProcessingException {
+    void findByZindex() throws JsonProcessingException {
         Integer zIndex = 2;
         
-        Widget foundWidget = widgetService.findByZIndex(zIndex);
+        Widget foundWidget = widgetService.findByZindex(zIndex);
         assertNotNull(foundWidget);        
     }
     
@@ -184,19 +184,19 @@ class WidgetMemoryServiceTest {
     void shiftingWidgets1() throws JsonProcessingException {
     	widgetService = new WidgetMemoryService();
     	Integer[] newWidgets ={1,2,3}; 
-    	addWidgetsByZIndex(newWidgets);
+    	addWidgetsByZindex(newWidgets);
     	
     	Long id = 4L;
         Integer zIndex = 2;
     	
     	Widget widget2 = Widget.builder().id(id).zIndex(zIndex).build();
         Widget savedWidget = widgetService.save(widget2);
-        assertEquals(zIndex, savedWidget.getZIndex());
+        assertEquals(zIndex, savedWidget.getZindex());
         
         Widget foundWidget = widgetService.findById(2L);
-        assertEquals(3, foundWidget.getZIndex());  
+        assertEquals(3, foundWidget.getZindex());  
         foundWidget = widgetService.findById(3L);
-        assertEquals(4, foundWidget.getZIndex());  
+        assertEquals(4, foundWidget.getZindex());  
         
     }
     
@@ -204,18 +204,18 @@ class WidgetMemoryServiceTest {
     void shiftingWidgets2() throws JsonProcessingException {
     	widgetService = new WidgetMemoryService();
     	Integer[] newWidgets ={1,5,6}; 
-    	addWidgetsByZIndex(newWidgets);
+    	addWidgetsByZindex(newWidgets);
     	
     	Integer zIndex = 2;
     	
     	Widget widget2 = Widget.builder().zIndex(zIndex).build();
         Widget savedWidget = widgetService.save(widget2);
-        assertEquals(zIndex, savedWidget.getZIndex());
+        assertEquals(zIndex, savedWidget.getZindex());
         
         Widget foundWidget = widgetService.findById(5L);
-        assertEquals(5, foundWidget.getZIndex());  
+        assertEquals(5, foundWidget.getZindex());  
         foundWidget = widgetService.findById(6L);
-        assertEquals(6, foundWidget.getZIndex());  
+        assertEquals(6, foundWidget.getZindex());  
         
     }
     
@@ -223,22 +223,22 @@ class WidgetMemoryServiceTest {
     void shiftingWidgets3() throws JsonProcessingException {
     	widgetService = new WidgetMemoryService();
     	Integer[] newWidgets ={1,2,4}; 
-    	addWidgetsByZIndex(newWidgets);
+    	addWidgetsByZindex(newWidgets);
     	
     	Integer zIndex = 2;
     	
     	Widget widget2 = Widget.builder().zIndex(zIndex).build();
         Widget savedWidget = widgetService.save(widget2);
-        assertEquals(zIndex, savedWidget.getZIndex());
+        assertEquals(zIndex, savedWidget.getZindex());
         
         Widget foundWidget = widgetService.findById(2L);
-        assertEquals(3, foundWidget.getZIndex());  
+        assertEquals(3, foundWidget.getZindex());  
         foundWidget = widgetService.findById(4L);
-        assertEquals(4, foundWidget.getZIndex());  
+        assertEquals(4, foundWidget.getZindex());  
         
     }
     
-    void addWidgetsByZIndex(Integer[] indexes) {
+    void addWidgetsByZindex(Integer[] indexes) {
     	for (Integer integer : indexes) {
     		widgetService.save(Widget.builder()
     			.id(integer.longValue())
