@@ -2,6 +2,12 @@ package com.miro.widgetcrud.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
@@ -21,7 +27,31 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(Include.NON_NULL)
+@Entity
+@Table(name = "widget")
 public class Widget extends BaseEntity{
+	
+	@NotNull
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "coordinates_id", referencedColumnName = "id")
+	private CartesianCoordinates coordinates;
+	
+	@NotNull
+	@Column(name = "zIndex")
+	private Integer zIndex;
+	
+	@NotNull
+	@Positive
+	@Column(name = "width")
+	private Integer width;
+	
+	@NotNull
+	@Positive
+	@Column(name = "height")
+	private Integer height;
+	
+	@Column(name = "modified")
+	private Date modified;
 	
 	@Builder
 	public Widget(Long id, @NotNull Integer x, @NotNull Integer y, @NotNull Integer zIndex,
@@ -42,23 +72,5 @@ public class Widget extends BaseEntity{
 		this.height = height;
 		this.modified = modified;
 	}
-
-	@NotNull
-	private CartesianCoordinates coordinates;
-	
-	@NotNull
-	private Integer zIndex;
-	
-	@NotNull
-	@Positive
-	private Integer width;
-	
-	@NotNull
-	@Positive
-	private Integer height;
-	
-	private Date modified;
-	
-
 	
 }

@@ -5,12 +5,14 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.miro.widgetcrud.model.Widget;
 import com.miro.widgetcrud.services.WidgetService;
 
 @Service
+@Profile({"default","memory"})
 public class WidgetMemoryService extends AbstractMemoryService<Widget, Long> implements WidgetService{
 	
 	@Override
