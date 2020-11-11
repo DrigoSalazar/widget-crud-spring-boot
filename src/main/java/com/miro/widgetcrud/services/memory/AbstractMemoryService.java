@@ -9,7 +9,7 @@ import java.util.Set;
 
 import com.miro.widgetcrud.model.BaseEntity;
 
-public class AbstractMemoryService<T extends BaseEntity, ID extends Long> {
+public class AbstractMemoryService<T extends BaseEntity, ID> {
 	protected Map<Long, T> map = new HashMap<>();
 
     Set<T> findAll(){

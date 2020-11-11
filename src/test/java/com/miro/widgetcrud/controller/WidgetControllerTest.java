@@ -99,7 +99,7 @@ class WidgetControllerTest {
 	
 	@Test
 	void findAll() throws Exception {
-		when(widgetService.findAllSorted()).thenReturn(widgets);
+		when(widgetService.findAllSorted(any(), any())).thenReturn(widgets);
 		
 		mockMvc.perform(get("/widget/all"))
 				.andExpect(status().isOk());		

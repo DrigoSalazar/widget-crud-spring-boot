@@ -1,16 +1,22 @@
 package com.miro.widgetcrud.services.springdatajpa;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.miro.widgetcrud.model.Widget;
 import com.miro.widgetcrud.repositories.WidgetRepository;
 import com.miro.widgetcrud.services.WidgetService;
+
 
 @Service
 @Profile("springdatajpa")
@@ -23,10 +29,19 @@ public class WidgetSDJpaService implements WidgetService {
 	}
 	
 	@Override
-	public Set<Widget> findAll() {
+	public Set<Widget> findAll(){
 		Set<Widget> widgets = new HashSet<>();
-		widgetRepository.findAll().forEach(widgets::add);;
-		return widgets;
+        widgetRepository.findAll().forEach(widgets::add);
+        return widgets;
+	}
+	
+	public List<Widget> findAllSorted(Integer pageNo, Integer pageSize) {
+		Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by("zindex"));
+		Page<Widget> pagedResult = widgetRepository.findAll(paging);
+		if(pagedResult.hasContent()) {
+			return pagedResult.getContent();
+		}
+		return new ArrayList<>();
 	}
 
 	public List<Widget> findAllSorted() {
