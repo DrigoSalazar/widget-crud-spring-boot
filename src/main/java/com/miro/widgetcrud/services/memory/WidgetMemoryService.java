@@ -79,7 +79,11 @@ public class WidgetMemoryService extends AbstractMemoryService<Widget, Long> imp
 
 	@Override
 	public List<Widget> findAllSorted(Integer pageNo, Integer pageSize) {
-		// TODO Auto-generated method stub
-		return null;
+		return super.findAll()
+				.stream()
+				.sorted(Comparator.comparing(Widget::getZindex))
+				.skip(pageNo * pageSize)
+				.limit(pageSize)
+				.collect(Collectors.toList());
 	}
 }
