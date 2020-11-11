@@ -36,7 +36,6 @@ public class Widget extends BaseEntity{
 	@JoinColumn(name = "coordinates_id", referencedColumnName = "id")
 	private CartesianCoordinates coordinates;
 	
-	@NotNull
 	@Column(name = "zindex")
 	private Integer zindex;
 	

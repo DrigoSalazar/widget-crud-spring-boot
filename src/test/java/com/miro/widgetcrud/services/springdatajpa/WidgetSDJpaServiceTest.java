@@ -112,12 +112,11 @@ class WidgetSDJpaServiceTest {
 	
 	@Test
 	void testFindByZIndex() {
-		List<Widget> returnWidgetList = new ArrayList<>();
-		returnWidgetList.add(returnWidget);
-		// when(widgetRepository.findByZIndex(any())).thenReturn(returnWidgetList);
-        
+		List<Widget> widgets = new ArrayList<>();
+        widgets.add(returnWidget);
+		when(widgetRepository.findByZindex(any())).thenReturn(widgets);
 		
-        Widget foundWidget = service.findByZindex(any());
+		Widget foundWidget = service.findByZindex(2);
         assertNotNull(foundWidget);  
 	}
 

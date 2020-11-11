@@ -3,13 +3,14 @@ package com.miro.widgetcrud.controller;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,14 +37,14 @@ class WidgetControllerTest {
 	
 	MockMvc mockMvc;
 	
-	Set<Widget> widgets;
+	List<Widget> widgets;
 	
 	@BeforeEach
     void setUp() {
 	    mockMvc = MockMvcBuilders
                 .standaloneSetup(widgetController)
                 .build();
-        widgets = new HashSet<>();
+        widgets = new ArrayList<>();
         widgets.add(Widget.builder()
         			.id(1L)
         			.x(4)
@@ -98,10 +99,16 @@ class WidgetControllerTest {
 	
 	@Test
 	void findAll() throws Exception {
-		when(widgetService.findAll()).thenReturn(widgets);
+		when(widgetService.findAllSorted()).thenReturn(widgets);
 		
 		mockMvc.perform(get("/widget/all"))
 				.andExpect(status().isOk());		
 	}
 
+	@Test
+	void deleteTest() throws Exception {
+		mockMvc.perform(delete("/widget/1"))
+				.andExpect(status().isOk());
+		verify(widgetService).deleteById(any());
+	}
 }
